@@ -28,12 +28,22 @@ def checkAccumulated():
     return(total)
 
 
-for index in range(len(x)):
-    if x[index][0] == "jmp":
-        x[index][0] = "nop"
-        if checkAccumulated():
-            x[index][0] = "jmp"
-    elif x[index][0] == "nop":
-        x[index][0] = "jmp"
-        if checkAccumulated():
+def part2():
+    for index in range(len(x)):
+        if x[index][0] == "jmp":
             x[index][0] = "nop"
+            if checkAccumulated():
+                x[index][0] = "jmp"
+            else:
+                output = checkAccumulated()
+                print(output)
+        elif x[index][0] == "nop":
+            x[index][0] = "jmp"
+            if checkAccumulated():
+                x[index][0] = "nop"
+            else:
+                output = checkAccumulated()
+                print(output)
+
+
+part2()
