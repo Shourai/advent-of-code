@@ -1,38 +1,44 @@
 import re
 
-AoCInput = "day7-input"
+AoCInput = "test-input"
 
-bagList = {}
-
-shinyGoldBags = ""
+colorList = []
 
 with open(AoCInput) as file:
     lines = file.readlines()
     for line in lines:
-        if re.search('shiny gold bags contain', line):
-            shinyGoldBags = line
+        if re.search(r'no other bags', line):
+            m = line.split()
+            colorList.append({m[0] + ' ' + m[1]: None})
+        else:
+            outside = re.search(r'(\w* \w*)', line)
+            inside = re.findall(r'(\d)+ (\w* \w*)', line)
+            colorList.append(
+                {outside.group(): {i[1]: int(i[0]) for i in inside}})
+
+# print(colorList)
 
 
-goldBagContains = re.findall(r'(\d*) (\w* \w*) bag[s]?', shinyGoldBags)
-print(goldBagContains)
+def findColor(color):
+    for i in colorList:
+        if list(i.keys())[0] == color:
+            color2 = i
+            print(color2)
+
+    for i in color2.values():
+        if i is None:
+            continue
+        for j in i.keys():
+            findColor(j)
 
 
-generalTree = list()
+# Find shiny gold bag
+for color in colorList:
+    if list(color.keys())[0] == "shiny gold":
+        shinyGold = color
 
+for i in shinyGold.values():
+    for j in i.keys():
+        findColor(j)
 
-def nextLayer(prevLayer):
-    layer = []
-    layer.append(prevLayer)
-    for color in prevLayer:
-        with open(AoCInput) as file:
-            lines = file.readlines()
-            for line in lines:
-                if re.findall(f'{color[1]} bags contain', line):
-                    bagContains = re.findall(r'(\d*) (\w* \w*) bag[s]?', line)
-                    generalTree.append(bagContains)
-                    print(bagContains)
-    return layer
-
-
-generalTree.append(nextLayer(goldBagContains))
-print(generalTree)
+# find color in list
