@@ -29,4 +29,4 @@ def countBags(color, colorList):
     return count
 
 
-print(countBags('shiny gold', colorList))
+print(countBags('shiny gold', colorList) - 1)
