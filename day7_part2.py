@@ -3,30 +3,28 @@ import pprint as pp
 
 AoCInput = "test-input"
 
-colorList = {}
+bagList = {}
 
 with open(AoCInput) as file:
     lines = file.readlines()
     for line in lines:
         if re.search(r'no other bags', line):
             m = line.split()
-            colorList[m[0] + ' ' + m[1]] = {}
+            bagList[m[0] + ' ' + m[1]] = {}
         else:
             outside = re.search(r'(\w* \w*)', line)
             inside = re.findall(r'(\d)+ (\w* \w*)', line)
-            colorList[outside.group()] = {i[1]: int(i[0]) for i in inside}
-
-pp.pprint(colorList)
+            bagList[outside.group()] = {i[1]: int(i[0]) for i in inside}
 
 
-def countBags(color, colorList):
+def countBags(bagList, currentBag):
     count = 1
-    insideBags = colorList[color]
-    for i in insideBags:
-        print(i)
-        multiply = insideBags[i]
-        count += multiply * countBags(i, colorList)
+    for bag in bagList[currentBag]:
+        qty = bagList[currentBag][bag]
+        count += qty * countBags(bagList, bag)
     return count
 
 
-print(countBags('shiny gold', colorList) - 1)
+print(countBags(bagList, 'shiny gold') - 1)
+
+# print(countBags('shiny gold', colorList) - 1)
