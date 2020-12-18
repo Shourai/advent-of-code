@@ -1,4 +1,4 @@
-with open('test-input') as file:
+with open('day10-input') as file:
     data = file.read().split()
     data = [int(i) for i in data]
 
@@ -20,22 +20,21 @@ def part1():
 
 
 def part2(data):
-    arrangements = 1
-    for jolt in range(1, len(data) - 1):
-        if data[jolt + 1] - data[jolt] == 1 and data[jolt] - data[jolt - 1] == 1:
-            arrangements += 1
-            data.pop(jolt)
-            print(data)
-            part2(data)
-            break
-        elif data[jolt + 1] - data[jolt] == 2 and data[jolt] - data[jolt - 1] == 2:
-            arrangements += 1
-            data.pop(jolt)
-            print(data)
-            part2(data)
-            break
-    return arrangements
+
+    # prepend 0 and append device jolt which is the last adapter +3
+    data.insert(0, 0)
+    data.append(data[-1] + 3)
+
+    PossibleRoutes = {str(data[-1]): 1}
+
+    for i in range(len(data)-2, -1, -1):
+        PossibleRoutes[str(data[i])] = 0
+        for gap in [3, 2, 1]:
+            if data[i] + gap in data:
+                PossibleRoutes[str(data[i])
+                               ] += PossibleRoutes[str(data[i] + gap)]
+
+    return PossibleRoutes
 
 
-x = part2(data)
-print(x)
+print(part2(data))

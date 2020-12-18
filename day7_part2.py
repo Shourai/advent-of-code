@@ -26,5 +26,3 @@ def countBags(bagList, currentBag):
 
 
 print(countBags(bagList, 'shiny gold') - 1)
-
-# print(countBags('shiny gold', colorList) - 1)
