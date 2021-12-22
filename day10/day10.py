@@ -7,12 +7,6 @@ class Part1:
             data = list(map(list, data))
             return data
 
-    def findIncomplete(self):
-        data = self.readInput()
-        for i in data:
-            if len(i) % 2 == 0:
-                print(i)
-
     def findCorrupted(self):
         brackets = {"{": "}", "(": ")", "[": "]", "<": ">"}
         points = {")": 3, "]": 57, "}": 1197, ">": 25137}
@@ -33,4 +27,47 @@ class Part1:
         print(totalPoints)
 
 
-Part1().findCorrupted()
+class Part2:
+    def readInput(self):
+        with open("./input", "r") as fd:
+            data = fd.read()
+            data = data.splitlines()
+            # print(data)
+            data = list(map(list, data))
+            return data
+
+    def findIncomplete(self):
+        brackets = {"{": "}", "(": ")", "[": "]", "<": ">"}
+        points = {")": 1, "]": 2, "}": 3, ">": 4}
+
+        data = self.readInput()
+        totalStack = []
+        for line in data:
+            stack = []
+            for ch in line:
+                if ch in brackets:
+                    stack.append(ch)
+                elif ch in brackets.values() and brackets[stack[-1]] == ch:
+                    stack.pop()
+                else:
+                    stack = []
+                    break
+            if stack:
+                tmp = list(map(lambda x: brackets[x], stack))
+                tmp.reverse()
+                totalStack.append(tmp)
+
+        pointList = []
+        for stack in totalStack:
+            totalPoints = 0
+            for ch in stack:
+                totalPoints *= 5
+                totalPoints += points[ch]
+            pointList.append(totalPoints)
+
+        # Find middle index
+        middle_idx = len(pointList) // 2
+        print(sorted(pointList)[middle_idx])
+
+
+Part2().findIncomplete()
