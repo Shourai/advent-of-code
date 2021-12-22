@@ -1,6 +1,6 @@
 class Part1:
     def readInput(self):
-        with open("./testinput", "r") as fd:
+        with open("./input", "r") as fd:
             data = fd.read()
             data = data.splitlines()
             # print(data)
@@ -14,25 +14,23 @@ class Part1:
                 print(i)
 
     def findCorrupted(self):
-        brackets = { "{": "}", "(":")", "[":"]", "<":">" }
+        brackets = {"{": "}", "(": ")", "[": "]", "<": ">"}
+        points = {")": 3, "]": 57, "}": 1197, ">": 25137}
 
+        totalPoints = 0
         stack = []
         data = self.readInput()
-        test = data[1]
-        for idx, ch  in enumerate(test):
-            if ch in brackets.values():
-                if brackets[stack[idx-1]] == ch and idx != 0 :
+        for line in data:
+            for ch in line:
+                if ch in brackets:
+                    stack.append(ch)
+                elif ch in brackets.values() and brackets[stack[-1]] == ch:
                     stack.pop()
-            else:
-                stack.append(ch)
-        print(stack)
-
-
-
-
-
-
-
+                else:
+                    totalPoints += points[ch]
+                    print(ch)
+                    break
+        print(totalPoints)
 
 
 Part1().findCorrupted()
