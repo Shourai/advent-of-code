@@ -9,18 +9,17 @@ moves: list[list[int]] = list()
 
 def readInput():
     with open("./input", "r") as input:
-        numberOfStacks: int = 0
-        for line in input:
-            if "1" in line:
-                numberOfStacks = len(list(map(int, re.findall(r"\d+", line))))
-                createStack(numberOfStacks)
-                break
-    with open("./input", "r") as input:
-        for line in input:
-            if "[" in line:
-                populateStacks(line)
-            elif "move" in line:
-                moves.append(list(map(int, re.findall(r"\d+", line))))
+        input = input.read().split("\n\n")
+        stackDiagram = input[0]
+        moveList = input[1]
+        numberOfStacks = len(stackDiagram.split("\n")[-1].split())
+        createStack(numberOfStacks)
+
+        for line in stackDiagram.split("\n")[:-1]:
+            populateStacks(line)
+
+        for line in moveList.split("\n")[:-1]:
+            moves.append(list(map(int, re.findall(r"\d+", line))))
 
 
 def createStack(numberOfStacks):
@@ -31,9 +30,7 @@ def createStack(numberOfStacks):
 def populateStacks(line):
     count = 1
     for i in range(1, len(line), 4):
-        if line.strip('\n')[i] == "1":
-            print(line.strip('\n')[i])
-        char = line.strip('\n')[i]
+        char = line[i]
         if char.isalpha():
             stacks["stack_"+str(count)].append(char)
         count += 1
@@ -67,8 +64,6 @@ class Part1:
 
 
 class Part2:
-    print(stacks)
-
     def popFromStack(self, amount, fromStack, toStack):
         poppedCrates = stacks["stack_" + str(fromStack)][-amount:]
         stacks["stack_" + str(fromStack)
