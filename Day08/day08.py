@@ -26,49 +26,97 @@ def getTreeHeight(x, y):
 
 trees = 0
 
+# for coordinate in allCoordinates:
+#     print("current coordinate: ", coordinate)
+#     currentTreeHeight = getTreeHeight(coordinate[0], coordinate[1])
+#     print("current tree height: ", currentTreeHeight)
+#
+#     # Create list of coordinates to check
+#     visible = False
+#     left = list()
+#     right = list()
+#     top = list()
+#     bottom = list()
+#
+#     for x in range(0, coordinate[0]):
+#         if getTreeHeight(x, coordinate[1]) < currentTreeHeight:
+#             left.append(True)
+#         else:
+#             left.append(False)
+#
+#     for x in range(coordinate[0]+1, len(input[0])):
+#         if getTreeHeight(x, coordinate[1]) < currentTreeHeight:
+#             right.append(True)
+#         else:
+#             right.append(False)
+#
+#     for y in range(0, coordinate[1]):
+#         if getTreeHeight(coordinate[0], y) < currentTreeHeight:
+#             top.append(True)
+#         else:
+#             top.append(False)
+#
+#     for y in range(coordinate[1]+1, len(input)):
+#         if getTreeHeight(coordinate[0], y) < currentTreeHeight:
+#             bottom.append(True)
+#         else:
+#             bottom.append(False)
+#
+#     print(left)
+#     print(right)
+#     print(top)
+#     print(bottom)
+#
+#     if all(left) or all(right) or all(top) or all(bottom):
+#         trees += 1
+
+scenicScore = []
+
 for coordinate in allCoordinates:
     print("current coordinate: ", coordinate)
     currentTreeHeight = getTreeHeight(coordinate[0], coordinate[1])
     print("current tree height: ", currentTreeHeight)
 
     # Create list of coordinates to check
-    visible = False
-    left = list()
-    right = list()
-    top = list()
-    bottom = list()
+    left = 0
+    right = 0
+    top = 0
+    bottom = 0
 
-    for x in range(0, coordinate[0]):
-        if getTreeHeight(x, coordinate[1]) < currentTreeHeight:
-            left.append(True)
+    for x in range(coordinate[0]-1, -1, -1):
+        if getTreeHeight(x, coordinate[1]) >= currentTreeHeight:
+            left += 1
+            break
         else:
-            left.append(False)
+            left += 1
 
     for x in range(coordinate[0]+1, len(input[0])):
-        if getTreeHeight(x, coordinate[1]) < currentTreeHeight:
-            right.append(True)
+        if getTreeHeight(x, coordinate[1]) >= currentTreeHeight:
+            right += 1
+            break
         else:
-            right.append(False)
+            right += 1
 
-    for y in range(0, coordinate[1]):
-        if getTreeHeight(coordinate[0], y) < currentTreeHeight:
-            top.append(True)
+    for y in range(coordinate[1]-1, -1, -1):
+        if getTreeHeight(coordinate[0], y) >= currentTreeHeight:
+            top += 1
+            break
         else:
-            top.append(False)
+            top += 1
 
     for y in range(coordinate[1]+1, len(input)):
-        if getTreeHeight(coordinate[0], y) < currentTreeHeight:
-            bottom.append(True)
+        if getTreeHeight(coordinate[0], y) >= currentTreeHeight:
+            bottom += 1
+            break
         else:
-            bottom.append(False)
+            bottom += 1
 
-    print(left)
-    print(right)
     print(top)
+    print(left)
     print(bottom)
+    print(right)
 
-    if all(left) or all(right) or all(top) or all(bottom):
-        trees += 1
+    scenicScore.append(left * right * top * bottom)
 
 
-print(trees + outerEdge)
+print(sorted(scenicScore, reverse=True))
