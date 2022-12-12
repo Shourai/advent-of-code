@@ -34,4 +34,39 @@ class Part1:
         print(sum(self.listOfSignalStrenths))
 
 
-Part1().runInstructions()
+# Part1().runInstructions()
+
+
+class Part2:
+    value: int = 1
+    cycle: int = 0
+    spriteList = list()
+    pixelRow = str()
+
+    def runCycle(self, cyc, val):
+        for _ in range(cyc):
+            if self.value + 1 == self.cycle or self.value - 1 == self.cycle or self.value == self.cycle:
+                self.pixelRow += "#"
+            else:
+                self.pixelRow += "."
+
+            self.cycle += 1
+
+            if self.cycle == 40:
+                self.spriteList.append(self.pixelRow)
+                print(self.pixelRow)
+                self.pixelRow = str()
+                self.cycle = 0
+        self.value += val
+
+    def runInstructions(self):
+        for instruction in input:
+            if "addx" in instruction:
+                self.runCycle(2, int(instruction.split()[1]))
+            else:
+                self.runCycle(1, 0)
+
+        # print(self.spriteList)
+
+
+Part2().runInstructions()
