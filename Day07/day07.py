@@ -1,41 +1,25 @@
-from dataclasses import dataclass
-
-with open("./testinput", "r") as input:
+with open("./input", "r") as input:
     input = input.read().splitlines()
 
 
-@dataclass
-class File:
-    name: str
-    size: int
+stack = []
+dirsize = {}
 
-
-@dataclass
-class Directory:
-    name: str
-
-
-@dataclass
-class Filesystem:
-    dir: Directory
-    file: File
-
-
-workingdir = {"current": "", "previous": ""}
-filesystem = list()
-
-for line in input:
-    if "cd .." in line:
-        workingdir["previous"] = workingdir["current"]
-    elif "cd" in line:
-        workingdir["previous"] = workingdir["current"]
-        workingdir["current"] = line.split()[-1]
-    if "ls" in line:
+for cmd in input:
+    if cmd == "$ ls" or cmd.startswith("dir"):
         continue
-    if "dir" in line:
-        filesystem.append(Directory(line.split()[-1]))
-    elif "$" not in line:
-        filesystem.append(File(
-            line.split()[-1], int(line.split()[0])))
+    if cmd.startswith("$ cd"):
+        dir = cmd.split()[-1]
+        if dir == "..":
+            stack.pop()
+        else:
+            dir = f"{stack[-1]}_{dir}" if stack else dir
+            stack.append(dir)
+            dirsize[dir] = 0
+    else:
+        size, filename = cmd.split()
+        for path in stack:
+            dirsize[path] += int(size)
 
-print(filesystem)
+print(sum(v for v in dirsize.values() if v <= 100000))
+
