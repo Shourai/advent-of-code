@@ -27,9 +27,35 @@ def part1():
 
 
 def part2():
-    pass
+    from collections import defaultdict
+
+    with open("./input", "r") as file:
+        data = file.readlines()
+
+    total = 0
+    counter = defaultdict(int)  # { game_n: number_of_cards }
+    for idx, line in enumerate(data):
+        numbers = line.strip().split(": ")[1].split(" | ")
+        # print(idx + 1, numbers)
+
+        # List comprehension (might be fastest)
+        winning_numbers = [int(x) for x in numbers[0].strip().split()]
+        numbers_in_hand = [int(x) for x in numbers[1].strip().split()]
+
+        copies = 0
+        counter[idx + 1] += 1
+
+        for num in winning_numbers:
+            if num in numbers_in_hand:
+                copies += 1
+
+        for i in range(copies):
+            counter[i + idx + 2] += counter[idx + 1]
+
+    total = sum(counter.values())
+    print(total)
 
 
 if __name__ == "__main__":
-    part1()
-    # part2()
+    # part1()
+    part2()
