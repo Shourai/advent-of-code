@@ -1,6 +1,6 @@
 # Source this file to make use of the aliases
 
-set AOC_COOKIE="..." # get this from the cookies tab in network tools on the AOC website
+export AOC_COOKIE="..." # get this from the cookies tab in network tools on the AOC website
 
 alias aos="python3 main.py < input"
 alias aot="python3 main.py < test"
