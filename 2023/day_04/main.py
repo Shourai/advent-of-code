@@ -1,6 +1,5 @@
 def part1():
-    with open("./input", "r") as file:
-        data = file.readlines()
+    data = open(0).readlines()
 
     total: int = 0
     exponent_factor: int
@@ -29,8 +28,7 @@ def part1():
 def part2():
     from collections import defaultdict
 
-    with open("./input", "r") as file:
-        data = file.readlines()
+    data = open(0).readlines()
 
     total = 0
     counter = defaultdict(int)  # { game_n: number_of_cards }
