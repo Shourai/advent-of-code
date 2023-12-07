@@ -3,15 +3,9 @@ from functools import reduce
 data = open(0).readlines()
 
 
-def multiplication(x: int, y: int) -> int:
-    return x * y
-
-
 def part1():
-    time = data[0].strip().split()[1:]
-    time = [int(x) for x in time]
-    distance = data[1].strip().split()[1:]
-    distance = [int(x) for x in distance]
+    time = [int(x) for x in data[0].strip().split()[1:]]
+    distance = [int(x) for x in data[1].strip().split()[1:]]
 
     multiple_way_to_win = []
 
@@ -22,13 +16,12 @@ def part1():
                 count += 1
         multiple_way_to_win.append(count)
 
-    print(reduce(multiplication, multiple_way_to_win))
+    print(reduce(lambda x, y: x * y, multiple_way_to_win))
 
 
 def part2():
     time = int("".join(data[0].strip().split()[1:]))
     distance = int("".join(data[1].strip().split()[1:]))
-
 
     count = 0
 
