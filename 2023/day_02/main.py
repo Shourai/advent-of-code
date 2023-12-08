@@ -1,7 +1,8 @@
 import re
 
+
 def part1():
-    cubes = {"red": 12, "green": 13, "blue": 14}
+    max_cubes = {"red": 12, "green": 13, "blue": 14}
 
     total = 0
 
@@ -11,14 +12,14 @@ def part1():
             game_id = re.findall(r"Game (\d+)", line)
             game_sets = re.findall(r"(\d+) (red|green|blue)", line)
             for game_set in game_sets:
-                possible_set.append(cubes[game_set[1]] >= int(game_set[0]))
+                possible_set.append(int(game_set[0]) <= max_cubes[game_set[1]])
 
             if all(possible_set):
                 total += int(game_id[0])
         print(total)
 
-def part2():
 
+def part2():
     total = 0
 
     with open("./input", "r") as file:
@@ -31,9 +32,7 @@ def part2():
 
             total += cubes["red"] * cubes["blue"] * cubes["green"]
 
-
     print(total)
-
 
 
 if __name__ == "__main__":
