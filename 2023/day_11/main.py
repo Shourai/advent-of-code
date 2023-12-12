@@ -1,6 +1,6 @@
 grid = open(0).read().splitlines()
 
-def main(expansion: int):
+def main(expansion: int | float):
 # Find columns and rows without galaxies
     row_without_galaxies = []
     col_without_galaxies = []
@@ -27,6 +27,10 @@ def main(expansion: int):
     galaxies = sorted(galaxies)
 
 # Expand galaxies
+# Subtract one from expansion because of double counting itself
+# A row/column 2x as big only adds 1 addition row/column
+# A row/column 1e6x as big only adds 999999 additional rows/column
+
     expanded_galaxies = []
     for galaxy in galaxies:
         temp_galaxy_row = galaxy[0]
@@ -56,5 +60,5 @@ def main(expansion: int):
     print(sum)
 
 if __name__ == "__main__":
-    main(1)
-    main(1000000)
+    main(expansion=2) # The rows and columns are 2x as big
+    main(expansion=1e6) # The rows and columns are 1E6 as big
