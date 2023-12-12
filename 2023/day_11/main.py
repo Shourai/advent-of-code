@@ -1,69 +1,60 @@
-data = open(0).readlines()
+grid = open(0).read().splitlines()
+
+def main(expansion: int):
+# Find columns and rows without galaxies
+    row_without_galaxies = []
+    col_without_galaxies = []
+
+    for row_idx, row in enumerate(grid):
+        if "#" not in row:
+            row_without_galaxies.append(row_idx)
+
+## Transpose matrix to easily iterate through columns
+    for col_idx, col in enumerate(zip(*grid)):
+        if "#" not in col:
+            col_without_galaxies.append(col_idx)
 
 
-def part1():
-    lines = [i.strip() for i in data]
-    instructions = lines[0]
-    nodes = lines[2:]
-    node_dict = {}
-    for node in nodes:
-        n = node.split(" = ")
-        node_dict[n[0]] = n[1].strip("()").split(", ")
 
-    current_node = "AAA"
-    final_node = False
-    count = 0
+# Get coordinates of all galaxies
+    galaxies = []
 
-    while not final_node:
-        for i in instructions:
-            if i == "R":
-                current_node = node_dict[current_node][1]
-                count += 1
-            if i == "L":
-                current_node = node_dict[current_node][0]
-                count += 1
-            if current_node == "ZZZ":
-                final_node = True
-    print(count)
+    for row_idx, row in enumerate(grid):
+        for col_idx, col in enumerate(row):
+            if col == "#":
+                galaxies.append((row_idx, col_idx))
 
+    galaxies = sorted(galaxies)
 
-def part2():
-    from math import lcm
-    lines = [i.strip() for i in data]
-    instructions = lines[0]
-    nodes = lines[2:]
-    node_dict = {}
-    starting_nodes = []
-    for node in nodes:
-        n = node.split(" = ")
-        node_dict[n[0]] = n[1].strip("()").split(", ")
-        if n[0][2] == "A":
-            starting_nodes.append(n[0])
+# Expand galaxies
+    expanded_galaxies = []
+    for galaxy in galaxies:
+        temp_galaxy_row = galaxy[0]
+        temp_galaxy_col = galaxy[1]
+        for r in row_without_galaxies:
+            if galaxy[0] > r:
+                temp_galaxy_row += (expansion - 1)
+        for c in col_without_galaxies:
+            if galaxy[1] > c:
+                temp_galaxy_col += (expansion - 1)
+        expanded_galaxies.append((temp_galaxy_row, temp_galaxy_col))
 
 
-    l_c_m = []
+    galaxies = expanded_galaxies
 
-    for node in starting_nodes:
-        current_node = node
-        count = 0
-        final_node = False
+# Distances between galaxies in (x, y) by taking the differences
+    paths = []
+    for idx, i in enumerate(galaxies):
+        for j in galaxies[idx+1::]:
+            paths.append(tuple(map(lambda x,y: y - x, i, j )))
 
-        while not final_node:
-            for i in instructions:
-                if i == "R":
-                    current_node = node_dict[current_node][1]
-                    count += 1
-                if i == "L":
-                    current_node = node_dict[current_node][0]
-                    count += 1
-                if current_node[2] == "Z":
-                    final_node = True
-        l_c_m.append(count)
+# Total distance between galaxies is x + y
+    sum = 0
+    for i in paths:
+        sum += abs(i[0]) + abs(i[1])
 
-    print(lcm(*l_c_m))
-
-
+    print(sum)
 
 if __name__ == "__main__":
-    # part1()
-    part2()
+    main(1)
+    main(1000000)
