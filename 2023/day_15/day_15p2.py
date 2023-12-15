@@ -1,14 +1,11 @@
 data = open(0).read().strip().split(",")
 
-import re
-from collections import OrderedDict, defaultdict
-
 
 def main():
     factor = 17
     modulo = 256
 
-    # hashmap will be a dictionary of OrderedDict
+    # hashmap will be a dictionary of dictionaries. Dictionaries are insertion ordered as of Python 3.6
     hashmap = {}  # { 0: {rn: 1, cm: 2}, 3: {...} }
 
     for seq in data:
@@ -29,9 +26,9 @@ def main():
 
         print(label, current_value, focal_length)
         if hashmap.get(current_value) is not None:
-            hashmap[current_value] |= OrderedDict([(label, focal_length)])
+            hashmap[current_value] |= {label: focal_length}
         else:
-            hashmap[current_value] = OrderedDict([(label, focal_length)])
+            hashmap[current_value] = {label: focal_length}
         if remove and hashmap.get(current_value) is not None:
             if hashmap[current_value].get(label) is not None:
                 hashmap[current_value].pop(label)
