@@ -12,6 +12,7 @@ def main():
         label = ""
         focal_length = ""
         remove = False
+
         if "=" in seq:
             label, focal_length = seq.split("=")
         if "-" in seq:
@@ -24,16 +25,21 @@ def main():
             current_value *= factor
             current_value %= modulo
 
-        print(label, current_value, focal_length)
-        if hashmap.get(current_value) is not None:
-            hashmap[current_value] |= {label: focal_length}
-        else:
-            hashmap[current_value] = {label: focal_length}
+        # print(label, current_value, focal_length)
+
+        # Remove box
         if remove and hashmap.get(current_value) is not None:
             if hashmap[current_value].get(label) is not None:
                 hashmap[current_value].pop(label)
+            continue
 
-    print(hashmap)
+        # Add or update box
+        if hashmap.get(current_value) is not None:
+            hashmap[current_value].update({label: focal_length})
+        else:
+            hashmap[current_value] = {label: focal_length}
+
+    # print(hashmap)
 
     sum = 0
     for box, v in hashmap.items():
