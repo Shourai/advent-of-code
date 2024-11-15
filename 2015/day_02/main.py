@@ -1,6 +1,3 @@
-from itertools import combinations
-
-
 def part1(data):
     total = 0
     for i in data:
