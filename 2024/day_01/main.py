@@ -1,5 +1,3 @@
-from collections import Counter
-
 with open("./testinput", "r") as f:
     left_list = []
     right_list = []
@@ -25,20 +23,8 @@ def part1():
 def part2():
     count = 0
 
-    # Create a dictionary counter
-
-    # d = {}
-    # for i in right_list:
-    #     if i in d:
-    #         d[i] += 1
-    #     else:
-    #         d[i] = 1
-
-    d = Counter(right_list)
-
-    for j in left_list:
-        if j in d:
-            count += j * d[j]
+    for i in left_list:
+        count += i * right_list.count(i)
     print(count)
 
 
