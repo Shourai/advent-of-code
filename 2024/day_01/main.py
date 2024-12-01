@@ -1,21 +1,21 @@
 with open("./testinput", "r") as f:
-    left_list = []
-    right_list = []
+    left = []
+    right = []
 
     data = f.readlines()
 
     for line in data:
         a = line.split()
-        left_list.append(int(a[0]))
-        right_list.append(int(a[1]))
+        left.append(int(a[0]))
+        right.append(int(a[1]))
 
 
 def part1():
-    left_list.sort()
-    right_list.sort()
+    left.sort()
+    right.sort()
     count = 0
 
-    for i, j in zip(left_list, right_list):
+    for i, j in zip(left, right):
         count += abs(i - j)
     print(count)
 
@@ -23,8 +23,8 @@ def part1():
 def part2():
     count = 0
 
-    for i in left_list:
-        count += i * right_list.count(i)
+    for i in left:
+        count += i * right.count(i)
     print(count)
 
 
