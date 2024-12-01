@@ -1,4 +1,6 @@
-with open("./testinput", "r") as f:
+from collections import Counter
+
+with open("./input", "r") as f:
     left = []
     right = []
 
@@ -13,19 +15,24 @@ with open("./testinput", "r") as f:
 def part1():
     left.sort()
     right.sort()
-    count = 0
+    score = 0
 
     for i, j in zip(left, right):
-        count += abs(i - j)
-    print(count)
+        score += abs(i - j)
+    print(score)
 
 
 def part2():
-    count = 0
+    count = Counter(right)
+    score = 0
+
+    # for i in left:
+    #     score += i * right.count(i)
 
     for i in left:
-        count += i * right.count(i)
-    print(count)
+        if i in count:
+            score += i * count[i]
+    print(score)
 
 
 if __name__ == "__main__":
