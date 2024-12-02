@@ -1,6 +1,10 @@
 from collections import Counter
 
 with open("./input", "r") as f:
+    data = [x.split() for x in f.readlines()]
+    print(data)
+
+with open("./input", "r") as f:
     left = []
     right = []
 
