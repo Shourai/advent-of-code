@@ -14,7 +14,22 @@ def part1():
 
 
 def part2():
-    pass
+    count = 0
+    skip = False
+    matches = re.findall(r"don\'t\(\)|do\(\)|mul\(\d+,\d+\)", data)
+    for i in matches:
+        if "don't" in i:
+            skip = True
+            continue
+        elif "do" in i:
+            skip = False
+            continue
+        if skip:
+            continue
+        else:
+            x1, x2 = re.findall(r"\d+", i)
+            count += int(x1) * int(x2)
+    print(count)
 
 
 if __name__ == "__main__":
