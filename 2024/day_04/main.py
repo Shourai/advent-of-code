@@ -49,37 +49,25 @@ def part1():
 
 def part2():
     occurances = 0
+    possibilities = [
+        ["M", "M", "S", "S"],
+        ["M", "S", "M", "S"],
+        ["S", "S", "M", "M"],
+        ["S", "M", "S", "M"],
+    ]
+
     for y in range(len(data)):
         for x in range(len(data[y])):
             if data[y][x] == "A":
-                if (
-                    data[y - 1][x - 1] == "M"
-                    and data[y + 1][x - 1] == "M"
-                    and data[y - 1][x + 1] == "S"
-                    and data[y + 1][x + 1] == "S"
-                ):
-                    occurances += 1
-                if (
-                    data[y - 1][x - 1] == "M"
-                    and data[y + 1][x - 1] == "S"
-                    and data[y - 1][x + 1] == "M"
-                    and data[y + 1][x + 1] == "S"
-                ):
-                    occurances += 1
-                if (
-                    data[y - 1][x - 1] == "S"
-                    and data[y + 1][x - 1] == "S"
-                    and data[y - 1][x + 1] == "M"
-                    and data[y + 1][x + 1] == "M"
-                ):
-                    occurances += 1
-                if (
-                    data[y - 1][x - 1] == "S"
-                    and data[y + 1][x - 1] == "M"
-                    and data[y - 1][x + 1] == "S"
-                    and data[y + 1][x + 1] == "M"
-                ):
-                    occurances += 1
+                for p in possibilities:
+                    # Check SW, NW, SE, NE
+                    if [
+                        data[y - 1][x - 1],
+                        data[y + 1][x - 1],
+                        data[y - 1][x + 1],
+                        data[y + 1][x + 1],
+                    ] == p:
+                        occurances += 1
     print(occurances)
 
 
