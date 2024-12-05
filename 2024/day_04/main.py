@@ -56,24 +56,31 @@ def part1():
 
 
 def part2():
+    """
+    There are 4 configurations of the X-MAS
+    M.S    M.M    S.M    S.S
+    .A. -> .A. -> .A. -> .A.
+    M.S    S.S    S.M    M.M
+    """
     occurances = 0
     possibilities = [
-        ["M", "M", "S", "S"],
+        # NW , NE , SE, SW
         ["M", "S", "M", "S"],
-        ["S", "S", "M", "M"],
+        ["M", "M", "S", "S"],
         ["S", "M", "S", "M"],
+        ["S", "S", "M", "M"],
     ]
 
     for y in range(len(data)):
         for x in range(len(data[y])):
             if data[y][x] == "A":
                 for p in possibilities:
-                    # Check SW, NW, SE, NE
+                    # Check NW,NE,SW,SE
                     if [
-                        data[y - 1][x - 1],
                         data[y + 1][x - 1],
-                        data[y - 1][x + 1],
                         data[y + 1][x + 1],
+                        data[y - 1][x - 1],
+                        data[y - 1][x + 1],
                     ] == p:
                         occurances += 1
     print(occurances)
