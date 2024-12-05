@@ -12,32 +12,40 @@ def part1():
     for y in range(len(data)):
         for x in range(len(data[y])):
             if data[y][x] == "X":
+                # E
                 if [data[y][x + 1], data[y][x + 2], data[y][x + 3]] == mas_list:
                     occurances += 1
+                # W
                 if [data[y][x - 1], data[y][x - 2], data[y][x - 3]] == mas_list:
                     occurances += 1
+                # N
                 if [data[y + 1][x], data[y + 2][x], data[y + 3][x]] == mas_list:
                     occurances += 1
+                # S
                 if [data[y - 1][x], data[y - 2][x], data[y - 3][x]] == mas_list:
                     occurances += 1
+                # NE
                 if [
                     data[y + 1][x + 1],
                     data[y + 2][x + 2],
                     data[y + 3][x + 3],
                 ] == mas_list:
                     occurances += 1
+                # SE
                 if [
                     data[y - 1][x + 1],
                     data[y - 2][x + 2],
                     data[y - 3][x + 3],
                 ] == mas_list:
                     occurances += 1
+                # NW
                 if [
                     data[y + 1][x - 1],
                     data[y + 2][x - 2],
                     data[y + 3][x - 3],
                 ] == mas_list:
                     occurances += 1
+                # SW
                 if [
                     data[y - 1][x - 1],
                     data[y - 2][x - 2],
