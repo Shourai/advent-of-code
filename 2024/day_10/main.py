@@ -1,29 +1,39 @@
 with open("./input") as f:
-    d = f.read().split()
+    stones = f.read().split()
+
+# Dictionary holding input variables stone and blink as key
+# As value what the stone become
+
+memory = {}
 
 
-def main(d, blinks):
-    if blinks == 25:
-        # print("blinks:", blinks, d)
-        print(len(d))
-        return
+def main(stone, blinks):
+    if (stone, blinks) in memory:
+        return memory[(stone, blinks)]
 
-    d2 = []
-    for i in range(len(d)):
-        if d[i] == "0":
-            d2.append("1")
-        elif len(d[i]) % 2 == 0:
-            half = len(d[i]) // 2
-            d2.append(d[i][:half])
-            if all(j == "0" for j in d[i][half:]):
-                d2.append(d[i][half : half + 1])
-            else:
-                d2.append(str(int(d[i][half:])))
-        else:
-            d2.append(str(int(d[i]) * 2024))
-    blinks += 1
-    main(d2, blinks)
+    if blinks == 0:
+        return 1
+
+    if stone == "0":
+        return main("1", blinks - 1)
+
+    if len(stone) % 2 == 0:
+        mid = len(stone) // 2
+        left, right = (str(int(stone[:mid])), str(int(stone[mid:])))
+        left_output = main(left, blinks - 1)
+        right_output = main(right, blinks - 1)
+        return left_output + right_output
+
+    else:
+        memory[(stone, blinks)] = main(str(int(stone) * 2024), blinks - 1)
+
+    return memory[(stone, blinks)]
 
 
 if __name__ == "__main__":
-    main(d, blinks=0)
+    # total = 0
+    # for stone in stones:
+    #     total += main(stone, 75)
+    # print(total)
+    print(main('125', 10))
+
