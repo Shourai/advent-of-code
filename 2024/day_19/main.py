@@ -1,4 +1,5 @@
 from functools import cache
+
 patterns = []
 designs = []
 
@@ -11,7 +12,6 @@ with open("./input") as f:
             designs.append(line.strip())
     designs = designs[1::]
 
-print(patterns)
 
 @cache
 def check_match(design):
@@ -22,7 +22,7 @@ def check_match(design):
 
     for pattern in patterns:
         if design.startswith(pattern):
-            total+= check_match(design[len(pattern):])
+            total += check_match(design[len(pattern) :])
     return total
 
 
@@ -34,6 +34,5 @@ if __name__ == "__main__":
         total += output
         if output:
             count += 1
-    print("part 1: ",count)
-    print("part 2: ",total)
-
+    print("part 1: ", count)
+    print("part 2: ", total)
