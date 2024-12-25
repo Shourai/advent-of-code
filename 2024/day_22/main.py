@@ -1,8 +1,11 @@
-with open("./testinput2") as f:
-    secret = f.readlines()
-    secret = [ int(i.strip()) for i in secret ]
+from collections import Counter
+from functools import reduce
 
-print(secret)
+with open("./input") as f:
+    secret = f.readlines()
+    secret = [int(i.strip()) for i in secret]
+
+# print(secret)
 
 
 def main(secret):
@@ -35,15 +38,28 @@ def main(secret):
     return secret
 
 
-
-
 if __name__ == "__main__":
-    total = 0
+    total_sequence = {}
     for i in secret:
-        count = 0
+        changes = {}
         input = i
-        while count < 2000:
+        change_range = []
+        list_of_ones = [i % 10]
+        for _ in range(2000):
             input = main(input)
-            count += 1
-        total += input
-    print(total)
+            list_of_ones.append(input % 10)
+
+        seen = set()
+        for i in range(len(list_of_ones) - 4):
+            a, b, c, d, e = list_of_ones[i : i + 5]
+            sequence = (b - a, c - b, d - c, e - d)
+
+            if sequence in seen:
+                continue
+            seen.add(sequence)
+
+            if sequence not in total_sequence:
+                total_sequence[sequence] = 0
+            total_sequence[sequence] += e
+
+    print(max(total_sequence.values()))
