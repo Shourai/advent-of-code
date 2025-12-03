@@ -24,30 +24,20 @@ def part1():
 
 
 def part2():
-    lst = []
+    summation = []
 
-    line = "818181911112111"
+    for line in input:
+        stack = []
+        k = 12
+        skips = len(line) - k
 
-    max_len = 12
+        for idx in range(len(line)):
+            while stack and line[idx] > stack[-1] and skips > 0:
+                stack.pop()
+                skips -= 1
+            stack.append(line[idx])
+        summation.append(int("".join(stack[:k])))
+    print(sum(summation))
 
-    sliding_window_len = len(line) - max_len
-    left_pointer = 0
-    right_pointer = sliding_window_len
-
-    print(f"pointers {left_pointer, right_pointer}")
-    print(f"searching between {line[left_pointer:right_pointer]}")
-    max_val = "0"
-    index = 0
-    for idx in range(len(line[left_pointer:right_pointer])):
-        if line[idx + left_pointer] > max_val:
-            max_val = line[idx + left_pointer]
-            index = idx
-            if index == 0:
-                left_pointer += 1
-            else:
-                left_pointer = index
-            right_pointer = left_pointer + sliding_window_len
-
-    print(left_pointer, right_pointer)
 
 part2()
