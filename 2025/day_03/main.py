@@ -31,11 +31,12 @@ def part2():
         k = 12
         skips = len(line) - k
 
-        for idx in range(len(line)):
-            while stack and line[idx] > stack[-1] and skips > 0:
+        for digit in line:
+            while stack and digit > stack[-1] and skips > 0:
                 stack.pop()
                 skips -= 1
-            stack.append(line[idx])
+            stack.append(digit)
+
         summation.append(int("".join(stack[:k])))
     print(sum(summation))
 
