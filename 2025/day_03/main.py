@@ -23,8 +23,31 @@ def part1():
     print(sum(lst))
 
 
-part1()
-
-
 def part2():
-    pass
+    lst = []
+
+    line = "818181911112111"
+
+    max_len = 12
+
+    sliding_window_len = len(line) - max_len
+    left_pointer = 0
+    right_pointer = sliding_window_len
+
+    print(f"pointers {left_pointer, right_pointer}")
+    print(f"searching between {line[left_pointer:right_pointer]}")
+    max_val = "0"
+    index = 0
+    for idx in range(len(line[left_pointer:right_pointer])):
+        if line[idx + left_pointer] > max_val:
+            max_val = line[idx + left_pointer]
+            index = idx
+            if index == 0:
+                left_pointer += 1
+            else:
+                left_pointer = index
+            right_pointer = left_pointer + sliding_window_len
+
+    print(left_pointer, right_pointer)
+
+part2()
