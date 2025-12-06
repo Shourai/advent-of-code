@@ -56,9 +56,14 @@ def part2():
             # print(multiplication_list)
             # print(addition_list)
             # math.prod([]) on an empty list gives 1, use this to bypass that
+
+            # if operator == "*":
+            # or
             if multiplication_list:
                 total += math.prod(multiplication_list)
                 multiplication_list = []
+            # if operator == "+":
+            # or
             if addition_list:
                 total += sum(addition_list)
                 addition_list = []
