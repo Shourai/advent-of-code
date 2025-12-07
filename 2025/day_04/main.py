@@ -33,14 +33,14 @@ def part1():
     count = 0
 
     for row in range(len(grid)):
-        if row == 0 or row == len(grid):
-            continue
         for col in range(len(grid[row])):
             if grid[row][col] == "@":
                 count += check_neighbours(grid, row, col)
 
     print(count)
 
+
+part1()
 
 def part2():
     new_grid = [list(line) for line in grid]
@@ -64,8 +64,6 @@ def part2():
     while removing:
         removal_coordinates = []
         for row in range(len(new_grid)):
-            if row == 0 or row == len(new_grid):
-                continue
             for col in range(len(grid[row])):
                 if new_grid[row][col] == "@":
                     if check_neighbours(new_grid, row, col) != (-1, -1):
