@@ -1,11 +1,11 @@
-with open("./input", "r") as file:
-    text = file.read()
+with open("./testinput", "r") as file:
+    input = file.read()
+
     dag = {}
-    for line in text.strip().splitlines():
-        node, neighbors = line.split(":")
-        node = node.strip()
-        neighbors = neighbors.strip().split()  # split on spaces
-        dag[node] = neighbors
+    for line in input.splitlines():
+        node, neighbours = line.split(":")
+        neighbours = neighbours.strip().split()
+        dag[node] = neighbours
 
 
 def count_paths(graph, start, goal):
