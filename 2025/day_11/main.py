@@ -1,4 +1,4 @@
-with open("./testinput", "r") as file:
+with open("./input", "r") as file:
     input = file.read()
 
     dag = {}
@@ -9,17 +9,15 @@ with open("./testinput", "r") as file:
 
 
 def count_paths(graph, start, goal):
-    count = [0]
-
     def dfs(node):
         if node == goal:
-            count[0] += 1
-            return
+            return 1  # base case: 1 valid path
+        total = 0
         for neighbor in graph[node]:
-            dfs(neighbor)
+            total += dfs(neighbor)  # sum paths from each neighbor
+        return total
 
-    dfs(start)
-    return count[0]
+    return dfs(start)
 
 
 print(count_paths(dag, "you", "out"))
